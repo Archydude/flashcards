@@ -1,9 +1,8 @@
 // Add this at the beginning of script.js
 class LoginManager {
     constructor() {
-        // Store hashed password instead of plain text
-        // This is the hashed version of your password using SHA-256
-        this.hashedPassword = 'cdbfaa2c523cb83e1d6289126d18f30c92ade7fb91a1e9eef5134444e99d975d';
+        // Replace with the hash you just generated
+        this.hashedPassword = '20dd4228d8d162ed9c61dbc181ff8dbfbbc1aa5f650a3b0b9a656c41ac677138';
         this.isLoggedIn = false;
         
         // Check if already logged in
@@ -48,6 +47,10 @@ class LoginManager {
     async handleLogin() {
         const enteredPassword = document.getElementById('password-input').value;
         const hashedInput = await this.hashPassword(enteredPassword);
+        
+        console.log('Entered password:', enteredPassword);
+        console.log('Generated hash:', hashedInput);
+        console.log('Stored hash:', this.hashedPassword);
         
         if (hashedInput === this.hashedPassword) {
             this.isLoggedIn = true;
