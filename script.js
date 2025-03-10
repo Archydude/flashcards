@@ -1,3 +1,75 @@
+// Add this at the beginning of script.js
+class LoginManager {
+    constructor() {
+        // Store hashed password instead of plain text
+        // This is the hashed version of your password using SHA-256
+        this.hashedPassword = 'cdbfaa2c523cb83e1d6289126d18f30c92ade7fb91a1e9eef5134444e99d975d';
+        this.isLoggedIn = false;
+        
+        // Check if already logged in
+        this.checkLoginStatus();
+    }
+    
+    // Add this new method to hash passwords
+    async hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    }
+    
+    checkLoginStatus() {
+        this.isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        if (this.isLoggedIn) {
+            this.showApp();
+        } else {
+            this.showLoginScreen();
+        }
+    }
+    
+    showLoginScreen() {
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('app-content').style.display = 'none';
+        
+        // Add login form listener
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleLogin();
+        });
+    }
+    
+    showApp() {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app-content').style.display = 'block';
+    }
+    
+    async handleLogin() {
+        const enteredPassword = document.getElementById('password-input').value;
+        const hashedInput = await this.hashPassword(enteredPassword);
+        
+        if (hashedInput === this.hashedPassword) {
+            this.isLoggedIn = true;
+            sessionStorage.setItem('isLoggedIn', 'true');
+            this.showApp();
+            const app = new FlashcardsManager();
+        } else {
+            this.showToast('Falsches Passwort!');
+        }
+    }
+    
+    showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2000);
+    }
+}
+
 // Card class to manage each flashcard with spaced repetition
 class Card {
     constructor(german, french) {
@@ -334,7 +406,7 @@ class FlashcardsManager {
     }
 }
 
-// Initialize the flashcards app when the DOM is loaded
+// Modify the initialization at the bottom of script.js
 document.addEventListener('DOMContentLoaded', () => {
-    const app = new FlashcardsManager();
+    const loginManager = new LoginManager();
 }); 

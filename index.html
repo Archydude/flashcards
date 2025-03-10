@@ -7,50 +7,64 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Französisch Vokabelkarten</h1>
-        
-        <div class="card">
-            <div class="card-inner">
-                <div class="card-front">
-                    <p id="question"></p>
-                    <button id="flip-btn">Antwort zeigen</button>
-                </div>
-                <div class="card-back">
-                    <p id="answer"></p>
-                    <div class="buttons">
-                        <button id="wrong-btn">Falsch</button>
-                        <button id="correct-btn">Richtig</button>
+    <!-- Add login screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-container">
+            <h1>Vokabelkarten</h1>
+            <form id="login-form" class="login-form">
+                <input type="password" id="password-input" placeholder="Passwort eingeben" required>
+                <button type="submit">Einloggen</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Wrap existing content in app-content div -->
+    <div id="app-content" style="display: none;">
+        <div class="container">
+            <h1>Französisch Vokabelkarten</h1>
+            
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <p id="question"></p>
+                        <button id="flip-btn">Antwort zeigen</button>
+                    </div>
+                    <div class="card-back">
+                        <p id="answer"></p>
+                        <div class="buttons">
+                            <button id="wrong-btn">Falsch</button>
+                            <button id="correct-btn">Richtig</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="stats">
-            <p>Karten übrig: <span id="cards-remaining">0</span></p>
-            <p>Richtig: <span id="correct-count">0</span></p>
-            <p>Falsch: <span id="wrong-count">0</span></p>
-        </div>
-        
-        <div class="add-card-section">
-            <h2>Neue Karte hinzufügen</h2>
-            <form id="add-card-form">
-                <div class="form-group">
-                    <label for="german-input">Deutsch:</label>
-                    <input type="text" id="german-input" placeholder="z.B. der Hund" required>
-                </div>
-                <div class="form-group">
-                    <label for="french-input">Französisch:</label>
-                    <input type="text" id="french-input" placeholder="z.B. le chien" required>
-                </div>
-                <button type="submit" id="add-btn">Karte hinzufügen</button>
-            </form>
-        </div>
-        
-        <div class="import-export">
-            <button id="export-btn">Exportieren als JSON</button>
-            <button id="import-btn">Importieren aus JSON</button>
-            <input type="file" id="file-input" accept=".json" style="display: none;">
+            
+            <div class="stats">
+                <p>Karten übrig: <span id="cards-remaining">0</span></p>
+                <p>Richtig: <span id="correct-count">0</span></p>
+                <p>Falsch: <span id="wrong-count">0</span></p>
+            </div>
+            
+            <div class="add-card-section">
+                <h2>Neue Karte hinzufügen</h2>
+                <form id="add-card-form">
+                    <div class="form-group">
+                        <label for="german-input">Deutsch:</label>
+                        <input type="text" id="german-input" placeholder="z.B. der Hund" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="french-input">Französisch:</label>
+                        <input type="text" id="french-input" placeholder="z.B. le chien" required>
+                    </div>
+                    <button type="submit" id="add-btn">Karte hinzufügen</button>
+                </form>
+            </div>
+            
+            <div class="import-export">
+                <button id="export-btn">Exportieren als JSON</button>
+                <button id="import-btn">Importieren aus JSON</button>
+                <input type="file" id="file-input" accept=".json" style="display: none;">
+            </div>
         </div>
     </div>
     
