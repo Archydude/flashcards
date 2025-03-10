@@ -1,9 +1,13 @@
 :root {
-    --card-width: 20rem;
-    --card-height: 12rem;
-    --primary-color: #3498db;
-    --correct-color: #2ecc71;
-    --wrong-color: #e74c3c;
+    --card-width: clamp(16rem, 90vw, 20rem);
+    --card-height: clamp(10rem, 50vh, 12rem);
+    --bg-color: #000000;
+    --card-bg: #111111;
+    --text-color: #ffffff;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --correct-color: #00cc88;
+    --wrong-color: #ff3366;
+    --toast-color: #00ff9d;
 }
 
 * {
@@ -18,7 +22,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f5f5f5;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .container {
@@ -27,13 +32,16 @@ body {
     align-items: center;
     width: 100%;
     max-width: 30rem;
-    padding: 1rem;
+    padding: clamp(0.5rem, 3vw, 1rem);
+    margin: 0 auto;
 }
 
 h1 {
-    margin-bottom: 2rem;
-    font-size: 1.5rem;
+    margin-bottom: clamp(1rem, 4vw, 2rem);
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
     text-align: center;
+    color: var(--text-color);
+    text-shadow: none;
 }
 
 .card {
@@ -49,8 +57,9 @@ h1 {
     height: 100%;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
 }
 
 .card.flipped .card-inner {
@@ -69,7 +78,8 @@ h1 {
     align-items: center;
     padding: 1rem;
     border-radius: 0.5rem;
-    background-color: white;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
 }
 
 .card-back {
@@ -77,33 +87,46 @@ h1 {
 }
 
 p {
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
     margin-bottom: 1rem;
     text-align: center;
 }
 
 button {
-    padding: 0.5rem 1rem;
-    margin: 0.5rem;
-    border: none;
+    padding: clamp(0.5rem, 3vw, 0.8rem) clamp(0.8rem, 4vw, 1rem);
+    min-height: 44px;
+    margin: clamp(0.3rem, 2vw, 0.5rem);
+    border: 1px solid var(--border-color);
     border-radius: 0.25rem;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: transparent;
+    color: var(--text-color);
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
 }
 
 button:hover {
-    opacity: 0.9;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    box-shadow: none;
 }
 
 #wrong-btn {
+    border-color: var(--wrong-color);
+}
+
+#wrong-btn:hover {
     background-color: var(--wrong-color);
+    color: var(--text-color);
 }
 
 #correct-btn {
+    border-color: var(--correct-color);
+}
+
+#correct-btn:hover {
     background-color: var(--correct-color);
+    color: var(--text-color);
 }
 
 .buttons {
@@ -112,15 +135,22 @@ button:hover {
 }
 
 .stats {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.5rem;
+    text-align: center;
     width: 100%;
     margin-top: 1rem;
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
 }
 
 .stats p {
     font-size: 0.9rem;
     margin: 0;
+    color: var(--text-color);
 }
 
 /* Add card section styling */
@@ -128,15 +158,17 @@ button:hover {
     width: 100%;
     margin-top: 2rem;
     padding: 1rem;
-    background-color: white;
+    background-color: var(--card-bg);
     border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 h2 {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 4vw, 1.2rem);
     margin-bottom: 1rem;
     text-align: center;
+    color: var(--text-color);
 }
 
 .form-group {
@@ -147,51 +179,398 @@ label {
     display: block;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
+    color: var(--text-color);
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
     width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
+    padding: clamp(0.5rem, 3vw, 0.8rem);
+    border: 1px solid var(--border-color);
     border-radius: 0.25rem;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    min-height: 44px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: var(--text-color);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
 }
 
 #add-btn {
     width: 100%;
-    background-color: var(--primary-color);
+    background-color: var(--text-color);
 }
 
 /* Import/Export section */
 .import-export {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     width: 100%;
     margin-top: 1rem;
     gap: 1rem;
 }
 
 .import-export button {
-    flex: 1;
-    background-color: #7f8c8d;
+    width: 100%;
+    margin: 0.25rem 0;
+    border-color: var(--text-color);
 }
 
 /* Add this to the end of your CSS file */
 .toast {
     position: fixed;
-    bottom: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--correct-color);
-    color: white;
+    background-color: var(--toast-color);
+    color: var(--bg-color);
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
+    box-shadow: none;
+    width: clamp(200px, 80vw, 300px);
 }
 
 .toast.show {
     opacity: 1;
+}
+
+.login-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-container {
+    background-color: var(--card-bg);
+    padding: clamp(1rem, 5vw, 2rem);
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+    width: clamp(280px, 90vw, 400px);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--text-color));
+    animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+#login-form button {
+    width: 100%;
+    margin-top: 1rem;
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#login-form button:hover {
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+
+#login-form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+#login-form button:hover::before {
+    left: 100%;
+}
+
+/* Add these new styles for the password input animation */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(255,255,255,0.5),
+                    0 0 10px rgba(255,255,255,0.3),
+                    0 0 15px rgba(255,255,255,0.1);
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(255,255,255,0.8),
+                    0 0 20px rgba(255,255,255,0.5),
+                    0 0 30px rgba(255,255,255,0.3);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255,255,255,0.5),
+                    0 0 10px rgba(255,255,255,0.3),
+                    0 0 15px rgba(255,255,255,0.1);
+    }
+}
+
+@keyframes typing {
+    0% { border-right-color: transparent; }
+    50% { border-right-color: var(--text-color); }
+    100% { border-right-color: transparent; }
+}
+
+/* Update the password input styling */
+#password-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 1.2rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    letter-spacing: 0.5em;
+    text-align: center;
+    font-family: monospace;
+    transition: all 0.3s ease;
+}
+
+#password-input:focus {
+    outline: none;
+    border-color: var(--text-color);
+    animation: glow 2s infinite;
+    border-right: 2px solid var(--text-color);
+    animation: glow 2s infinite, typing 1s infinite;
+    background-color: rgba(255, 255, 255, 0.1);
+    letter-spacing: 0.8em;
+}
+
+/* Style the password dots */
+#password-input::placeholder {
+    letter-spacing: normal;
+    opacity: 0.5;
+}
+
+/* Add these new styles for the access animation */
+.access-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.terminal {
+    width: 90%;
+    max-width: 600px;
+    color: #00ff00;
+    font-family: monospace;
+    font-size: clamp(0.8rem, 3vw, 1.2rem);
+    padding: clamp(0.5rem, 3vw, 1rem);
+}
+
+.terminal-text {
+    height: 200px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 255, 0, 0.2);
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #00ff00;
+    animation: progress 2s ease-in-out forwards;
+}
+
+.access-granted {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+@keyframes progress {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes typeText {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+@keyframes accessGranted {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.terminal-line {
+    position: relative;
+    margin: 0.5rem 0;
+    padding-left: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    animation: glitch 0.3s infinite;
+}
+
+.terminal-line::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: #00ff00;
+}
+
+/* Add initial styles for app content */
+#app-content {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    width: 100%;
+}
+
+/* Update fadeOut animation */
+@keyframes fadeOut {
+    0% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% { 
+        opacity: 0;
+        transform: scale(1.1);
+    }
+}
+
+/* Make terminal text more cyberpunk */
+.terminal-line {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    position: relative;
+    margin: 0.5rem 0;
+    padding-left: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+    0% {
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+    50% {
+        text-shadow: 2px 0 10px rgba(0, 255, 0, 0.7);
+    }
+    100% {
+        text-shadow: -2px 0 10px rgba(0, 255, 0, 0.5);
+    }
+}
+
+/* Add meta viewport tag if not already present */
+@media (max-width: 480px) {
+    .buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .buttons button {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+
+    .card-front, .card-back {
+        padding: clamp(0.5rem, 3vw, 1rem);
+    }
+
+    .add-card-section {
+        padding: clamp(0.8rem, 4vw, 1rem);
+    }
+
+    .card-inner {
+        transition: transform 0.4s; /* Slightly faster on mobile */
+    }
+    
+    /* Improve touch targets */
+    #flip-btn {
+        width: 80%;
+        margin: 1rem auto;
+    }
+    
+    /* Make stats more compact on mobile */
+    .stats {
+        padding: 0.5rem;
+    }
+    
+    /* Adjust terminal text size on very small screens */
+    .terminal {
+        font-size: clamp(0.7rem, 2.5vw, 1.2rem);
+    }
+    
+    /* Make access granted text more visible on mobile */
+    .access-granted {
+        font-size: clamp(1.5rem, 8vw, 2rem);
+    }
+}
+
+/* Add iOS safe area support */
+@supports (padding: max(0px)) {
+    .container {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+    
+    .toast {
+        bottom: max(1rem, env(safe-area-inset-bottom));
+    }
 } 

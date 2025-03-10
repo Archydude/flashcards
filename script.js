@@ -48,18 +48,74 @@ class LoginManager {
         const enteredPassword = document.getElementById('password-input').value;
         const hashedInput = await this.hashPassword(enteredPassword);
         
-        console.log('Entered password:', enteredPassword);
-        console.log('Generated hash:', hashedInput);
-        console.log('Stored hash:', this.hashedPassword);
-        
         if (hashedInput === this.hashedPassword) {
             this.isLoggedIn = true;
             sessionStorage.setItem('isLoggedIn', 'true');
+            
+            // Show access animation
+            await this.showAccessAnimation();
+            
+            // After animation completes, show the app
             this.showApp();
             const app = new FlashcardsManager();
         } else {
             this.showToast('Falsches Passwort!');
         }
+    }
+    
+    async showAccessAnimation() {
+        const animation = document.getElementById('access-animation');
+        const terminal = animation.querySelector('.terminal-text');
+        const accessGranted = animation.querySelector('.access-granted');
+        
+        document.getElementById('login-screen').style.display = 'none';
+        animation.style.display = 'flex';
+        
+        const lines = [
+            'INITIATING SECURE CONNECTION...',
+            'VERIFYING CREDENTIALS...',
+            'DECRYPTING DATABASE...',
+            'LOADING FLASHCARDS...',
+            'ESTABLISHING SECURE SESSION...',
+            'INITIALIZING INTERFACE...'
+        ];
+        
+        // Speed up the typing (reduced from 50ms to 12ms per character)
+        for (let line of lines) {
+            const lineElement = document.createElement('div');
+            lineElement.className = 'terminal-line';
+            terminal.appendChild(lineElement);
+            
+            for (let char of line) {
+                lineElement.textContent += char;
+                await new Promise(r => setTimeout(r, 12));
+            }
+            lineElement.style.opacity = '1';
+            // Reduced wait between lines from 500ms to 125ms
+            await new Promise(r => setTimeout(r, 125));
+        }
+        
+        // Reduced wait before "ACCESS GRANTED" from 1000ms to 250ms
+        await new Promise(r => setTimeout(r, 250));
+        accessGranted.style.animation = 'accessGranted 0.5s forwards';
+        
+        // Reduced final wait from 2000ms to 500ms
+        await new Promise(r => setTimeout(r, 500));
+        
+        // Add a cool transition to reveal the app
+        const appContent = document.getElementById('app-content');
+        appContent.style.display = 'block';
+        appContent.style.opacity = '0';
+        appContent.style.transform = 'scale(0.9) translateY(20px)';
+        
+        animation.style.animation = 'fadeOut 0.5s forwards';
+        await new Promise(r => setTimeout(r, 500));
+        animation.style.display = 'none';
+        
+        // Reveal the app with a cool animation
+        appContent.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        appContent.style.opacity = '1';
+        appContent.style.transform = 'scale(1) translateY(0)';
     }
     
     showToast(message) {

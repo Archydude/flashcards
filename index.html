@@ -2,15 +2,15 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jasmin, I love you❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Baumeler Flashcards</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Add login screen -->
     <div id="login-screen" class="login-screen">
         <div class="login-container">
-            <h1>Jasmin, I love you❤️</h1>
+            <h1>Baumeler Flashcards</h1>
             <form id="login-form" class="login-form">
                 <input type="password" id="password-input" placeholder="Passwort eingeben" required>
                 <button type="submit">Einloggen</button>
@@ -18,10 +18,21 @@
         </div>
     </div>
 
+    <!-- Add this right after the login-screen div -->
+    <div id="access-animation" class="access-animation" style="display: none;">
+        <div class="terminal">
+            <div class="terminal-text"></div>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <div class="access-granted">ACCESS GRANTED</div>
+        </div>
+    </div>
+
     <!-- Wrap existing content in app-content div -->
     <div id="app-content" style="display: none;">
         <div class="container">
-            <h1>Jasmin, I love you❤️</h1>
+            <h1>Baumeler Flashcards</h1>
             
             <div class="card">
                 <div class="card-inner">
