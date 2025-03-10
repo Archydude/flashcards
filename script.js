@@ -177,6 +177,9 @@ class FlashcardsManager {
         
         this.exportBtn.addEventListener('click', () => this.exportCards());
         this.importBtn.addEventListener('click', () => this.fileInput.click());
+        
+        // Update file input to work better with iOS
+        this.fileInput.accept = '.json,application/json';
         this.fileInput.addEventListener('change', (e) => this.importCards(e));
     }
     
@@ -238,16 +241,30 @@ class FlashcardsManager {
     // Export cards as JSON file
     exportCards() {
         const data = JSON.stringify(this.cards, null, 2);
+        
+        // Create blob and URL
         const blob = new Blob([data], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         
+        // Create download link
         const a = document.createElement('a');
         a.href = url;
         a.download = 'flashcards.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        a.style.display = 'none';
+        
+        // For iOS Safari, we need to use a different approach
+        if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+            // Open in new tab which allows saving to Files
+            window.open(url, '_blank');
+            URL.revokeObjectURL(url);
+            this.showToast('Datei öffnen und "Auf iPhone/iPad speichern" wählen');
+        } else {
+            // Normal download for other browsers
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
     }
     
     // Import cards from JSON file
